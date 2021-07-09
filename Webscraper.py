@@ -2,6 +2,7 @@ from urllib.request import urlopen
 import requests
 from bs4 import BeautifulSoup
 import re
+import csv
 
 class WebScrape():
     def __init__(self):
@@ -41,6 +42,15 @@ class WebScrape():
     def getDictionary(self):
         for i in range(len(self.names)):
             self.dictionary[self.names[i]]=self.ratings[i]
+           
+            
+        datafile = open("NamesAndRatings.csv", "w")
+
+        writer = csv.writer(datafile)
+        for name, rating in self.dictionary.items():
+            writer.writerow([name, rating])
+        datafile.close()
+        
         return self.dictionary
 web = WebScrape()
 web.scrapeRating()
